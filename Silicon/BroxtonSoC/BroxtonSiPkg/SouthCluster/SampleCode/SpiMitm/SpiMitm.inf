@@ -1,0 +1,45 @@
+[Defines]
+  INF_VERSION                    = 0x00010005
+  BASE_NAME                      = SpiMitm
+  FILE_GUID                      = 7e5667cc-8b6d-43c1-b0b3-150c0e2f58e7
+  MODULE_TYPE                    = DXE_SMM_DRIVER
+  ENTRY_POINT                    = InstallSpiMitm
+  PI_SPECIFICATION_VERSION       = 0x0001000A
+
+[Sources]
+  SpiMitm.c
+  CpuIceBreakpoint.nasm
+
+[Packages]
+  MdePkg/MdePkg.dec
+  OvmfPkg/OvmfPkg.dec
+  BroxtonSiPkg/BroxtonSiPkg.dec
+  BroxtonSiPkg/BroxtonSiPrivate.dec
+
+[LibraryClasses]
+  UefiDriverEntryPoint
+  UefiLib
+  #MmServicesTableLib
+  SmmServicesTableLib
+  DebugLib
+  IoLib
+  UefiBootServicesTableLib
+  BaseLib
+  ScSpiCommonLib
+  MmPciLib
+  ScPlatformLib
+
+[Protocols]
+  gEfiMmCpuIoProtocolGuid
+  gEfiSmmIchnDispatchExProtocolGuid
+  gEfiSmmPeriodicTimerDispatch2ProtocolGuid
+  gEfiSmmSwDispatch2ProtocolGuid
+
+[Pcd]
+  gEfiBxtTokenSpaceGuid.PcdScAcpiIoPortBaseAddress
+
+[Depex]
+  gEfiMmCpuIoProtocolGuid                   AND
+  gEfiSmmIchnDispatchExProtocolGuid         AND
+  gEfiSmmPeriodicTimerDispatch2ProtocolGuid AND
+  gEfiSmmSwDispatch2ProtocolGuid
